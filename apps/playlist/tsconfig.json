@@ -1,0 +1,9 @@
+{
+  "extends": "tsconfig/nextjs.json",
+  "compilerOptions": {
+    "jsx": "react",
+    "plugins": [{ "name": "next" }]
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../../packages/playlist-content/PlaylistContent.tsx"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,25 @@
+.container-nav {
+  height: 70px;
+  position: absolute;
+  background: white !important;
+  width: 100%;
+  vertical-align: middle;
+}
+.container-nav a {
+  padding: 0.25em 1em;
+  margin-right: 1em;
+}
+.containter-content-app {
+  top: 70px;
+  position: relative;
+}
+.mantine-Header-root,
+.mantine-Navbar-root {
+  top: 70px !important;
+}
+.mantine-Header-root {
+  left: 10rem !important;
+}
+.mantine-Navbar-root {
+  width: 10rem !important;
+}
