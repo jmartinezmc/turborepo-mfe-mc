@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^7.1.0",
     "@mantine/core": "^6.0.17",
     "@mantine/hooks": "^6.0.17",
     "@testing-library/jest-dom": "^5.17.0",
@@ -12,16 +13,16 @@
     "@types/node": "^16.18.38",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
+    "card": "workspace:*",
+    "movies-content": "workspace:*",
+    "playlist-content": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "store": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^4.9.5",
     "ui": "workspace:*",
-    "card": "workspace:*",
-    "store": "workspace:*",
-    "movies-content": "workspace:*",
-    "playlist-content": "workspace:*",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

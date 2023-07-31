@@ -1,12 +1,14 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter, Outlet, Link, Routes, Route } from "react-router-dom";
-// @ts-ignore
-import MoviesApp from "movies/MoviesApp";
-// @ts-ignore
-// import PlaylistApp from "playlist/PlaylistApp";
 import "./App.css";
 // @ts-ignore
-const PlaylistApp = lazy(() => import("playlist/PlaylistApp"));
+// import MoviesApp from "movies/MoviesApp";
+// @ts-ignore
+// import PlaylistApp from "playlist/PlaylistApp";
+// @ts-ignore
+const MoviesApp = React.lazy(() => import("movies/MoviesApp"));
+// @ts-ignore
+const PlaylistApp = React.lazy(() => import("playlist/PlaylistApp"));
 
 function App() {
   const routes = [
@@ -16,11 +18,11 @@ function App() {
     },
     {
       path: "/movies",
-      element: MoviesApp,
+      element: () => <MoviesApp />,
     },
     {
       path: "/playlist",
-      element: PlaylistApp,
+      element: () => <PlaylistApp />,
     },
   ];
 
@@ -54,7 +56,7 @@ function App() {
               key={route.path}
               path={route.path}
               element={
-                <Suspense fallback={<div>Page is Loading...</div>}>
+                <Suspense fallback={"loading..."}>
                   <route.element></route.element>
                 </Suspense>
               }

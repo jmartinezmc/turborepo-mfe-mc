@@ -9,14 +9,24 @@ module.exports = () => ({
         publicPath: "auto",
       },
     },
+    optimization: {
+      minimize: false,
+      runtimeChunk: true,
+    },
     plugins: {
       add: [
         new ModuleFederationPlugin({
           name: "dummyapp",
           filename: "remoteEntry.js",
           remotes: {
-            movies: "movies@http://localhost:3000/remoteEntry.js",
-            playlist: "playlist@http://localhost:3001/remoteEntry.js",
+            movies: lazyLoadRemote(
+              "http://localhost:3000/remoteEntry.js",
+              "movies"
+            ),
+            playlist: lazyLoadRemote(
+              "http://localhost:3001/remoteEntry.js",
+              "playlist"
+            ),
           },
           shared: {
             ...deps,
@@ -52,3 +62,40 @@ module.exports = () => ({
     },
   },
 });
+
+function lazyLoadRemote(remoteUrl, appName) {
+  return `promise new Promise(resolve => {
+    const script = document.createElement('script')
+    script.src = '${remoteUrl}'
+    script.onload = () => {
+      // remote cargado y disponibles
+      const proxy = {
+        get: (request) => {
+          return window.${appName}.get(request);
+        },
+        init: (arg) => {
+          try {
+            return window.${appName}.init(arg)
+          } catch(e) {
+            console.log('remote container inicializado')
+          }
+        }
+      }
+      resolve(proxy)
+    }
+    script.onerror = (error) => {
+      console.error('error cargando remote container')
+      const proxy = {
+        get: (request) => {
+          // si el consumer está muerto, renderizar esto
+          return Promise.resolve(() => () => "I'm a dead shell of an app. Reload later.");
+        },
+        init: (arg) => {
+          return;
+        }
+      }
+      resolve(proxy)
+    }
+    document.head.appendChild(script);
+  })`;
+}
